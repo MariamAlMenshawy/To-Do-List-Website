@@ -17,7 +17,7 @@ def home(request):
 def listTodayTasks(request):
     status = request.GET.get('status')
     today = datetime.date.today()
-    tasks = Task.objects.filter(user=request.user,due_date = today)
+    tasks = Task.objects.filter(user=request.user,due_date__date = today)
 
     if status == 'done':
         tasks = tasks.filter(is_done=True)
