@@ -24,9 +24,9 @@ A web-based To-Do List application built using the Django framework (Python), HT
 
 
 ## Technologies Used 
-* Backend: Python & Django Framework.
-* Frontend: HTML5, CSS3, and Bootstrap for responsive design.
-* Database: PostgreSQL.
+* ***Backend:*** Python & Django Framework.
+* ***Frontend:*** HTML5, CSS3, and Bootstrap for responsive design.
+* ***Database:*** PostgreSQL.
 
 
 
