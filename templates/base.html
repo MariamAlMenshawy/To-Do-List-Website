@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body{
+            background-color: #e6f2ff; 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .navbar-dark .navbar-nav .nav-link{
+            color: #f0f8ff; 
+        }
+
+        .navbar-brand{
+            color: #f0f8ff;
+            font-weight: bold;
+        }
+        .navbar-brand:hover {
+            text-decoration: underline;
+            color: #d9e6f4; 
+            cursor: pointer;
+        }
+
+        .btn-outline-secondary {
+            background-color: #d9e6f4; 
+            border-color: #556f8b;
+            color: #3e566d;
+            font-size: 0.85rem;
+            padding: 5px 12px;
+            transition: all 0.3s;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #3e566d;
+            color: #fff;
+        }
+
+        .btn-primary {
+            background-color: #556f8b; 
+            border-color: #556f8b;
+            color: #fff;
+            font-size: 0.85rem;
+            padding: 5px 12px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #3e566d;
+            border-color: #3e566d;
+        }
+
+        /* Add Task Button */
+        .btn-add {
+            background-color: #3e566d;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 6px 12px;
+            transition: background 0.3s;
+        }
+
+        .btn-add:hover {
+            background-color: #556f8b;
+            color: white;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb{
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            padding: 10px 15px;
+            list-style: none; /* شيل النقاط */
+            display: flex;
+            gap: 5px;
+            margin-bottom: 0;
+        }
+
+        .breadcrumb a{
+            color: #3e566d;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover{
+            text-decoration: underline;
+        }
+
+        .card-box{
+            transition: all 0.3s ease;
+            background-color: #f0f8ff;
+            color: #556f8b;
+            border-radius: 15px;
+            padding: 15px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            text-decoration: none;
+        }
+
+        .card-box:hover{
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+            background-color: #d9e6f4;
+            cursor: pointer;
+        }
+
+        .card-box h5{
+            font-weight: bold;
+            color: #3e566d;
+            margin-bottom: 10px;
+        }
+
+        .card-box p{
+            color: #7a8fa6;
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .card-box i{
+            font-size: 2.5rem;
+            color: #556f8b;
+            margin-bottom: 15px;
+        }
+
+        h1{
+            font-weight: 800;
+            color:#3e566d;
+            position: relative;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            font-size:1.5rem;
+        }
+        .breadcrumb a {
+            outline: none;      
+            text-decoration: none; 
+        }
+
+        .breadcrumb a:focus,
+        .breadcrumb a:active {
+            outline: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    {% block body %}
+    <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #3e566d;">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-light" href="{% url 'home' %}">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainMenu">
+                {% if user.is_authenticated %}
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Welcome  {{ user.username }} 
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                            <li><a class="dropdown-item" href="{% url 'my_account' %}">My account</a></li>
+                            <li><a class="dropdown-item" href="{% url 'password_change' %}">Change password</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                {% else %}
+                <div class="ms-auto d-flex gap-2">
+                    <a href="#" class="btn btn-outline-secondary">Login</a>
+                    <a href="#" class="btn btn-primary">Signup</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-3 py-3">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="breadcrumb" style="list-style:none; padding:0; margin:0; background:none;">
+                    {% block breadcrumb %}
+                        
+                    {% endblock %}
+                </div>
+                {% block addTask %}
+                
+                {% endblock addTask %}
+            </div>
+
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    {% endblock body %}
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

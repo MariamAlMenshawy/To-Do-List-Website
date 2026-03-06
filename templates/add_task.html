@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Add new task{% endblock %}
+  
+
+{% block breadcrumb %}
+{% endblock %}
+
+<style>
+    .btn-add{
+background-color: #3e566d;
+    color: white;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-add:hover{
+    background-color: #556f8b;
+    color: white;
+}
+</style>
+{% block content %}
+<form method="post" novalidate>
+    {% csrf_token %}
+    {%include 'includes/form.html'%}
+    <br>
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit" class="btn btn-lg btn-add">Add</button>
+
+</form>
+{% endblock %}

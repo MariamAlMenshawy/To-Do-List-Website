@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}today list{% endblock %}
+    
+{% block breadcrumb %}
+    <li class="breadcrumb-item active"><h1>Month List</h1></li>
+{% endblock %}
+         {% block addTask %}
+                <a href="{% url 'add_task' %}?next={{ request.path }}" class="btn btn-add btn-sm">
+                    <i class="fa-solid fa-plus"></i> Add Task
+                </a>
+                {% endblock addTask %}
+
+{% block content %}
+
+<table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Task title</th>
+                <th>Body</th>
+                <th>Is done</th>
+                <th>Due Date</th>
+                <th>Created_at</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks%}
+            <tr>
+                <td> <a href="#">{{task.title}}</a> </td>
+                <td>{{task.body}}</td>
+                <td>
+                  <form method="post" action="{% url 'task_done' task.id %}?next={{ request.path }}">
+                        {% csrf_token %}
+
+                    <input type="checkbox"
+                    onchange="this.form.submit()"
+                    {% if task.is_done %}
+                    checked
+                    {% endif %}>
+                    </form>
+                </td>
+                 <td>{{task.due_date}}</td>
+                <td>{{task.created_at}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+{% endblock %}

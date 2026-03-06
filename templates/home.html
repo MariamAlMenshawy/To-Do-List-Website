@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}home{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+
+body{
+    background-color: #e6f2ff;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.card-box{
+    transition: all 0.3s ease;
+    background-color: #f0f8ff;
+    color: #556f8b;
+    border-color: #9ab7d2;
+    border-radius: 15px;
+    padding: 15px;
+    border: none;
+    height: 100%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    min-height: 30px;
+}
+
+.card-box:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    background-color: #aec2d8;
+    cursor: pointer;
+}
+
+.card-box h5{
+    font-weight: bold;
+    color: #3e566d;
+    margin-bottom: 10px;
+}
+
+.card-box p{
+    color: #7a8fa6;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+.card-box i {
+    font-size: 2.5rem;
+    color: #556f8b;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+h1{
+    font-weight: 800;
+    color:#3e566d;
+    position: relative;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+h1::after{
+    content:""; 
+    width:145px; 
+    height:5px; 
+    background:#556f8b; 
+    display:block; 
+    margin:10px auto;
+    
+}
+.btn-add{
+background-color: #3e566d;
+    color: white;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-add:hover{
+    background-color: #556f8b;
+    color: white;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container mt-5 py-5">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h1 class="mb-0">To Do List</h1>
+        <a href="{% url 'add_task' %}?next={{ request.path }}" class="btn btn-lg btn-add">
+            <i class="fa-solid fa-plus"></i> Add Task
+        </a>
+    </div>
+<div class="row g-5 ">
+
+<div class="col-md-4">
+<a href="{% url 'today_list' %}" class="text-decoration-none">
+<div class="card text-center card-box">
+<div class="card-body">
+<i class="fa-solid fa-calendar-day"></i>
+<h5>Today</h5>
+<p>Tasks for today</p>
+</div>
+</div>
+</a>
+</div>
+
+<div class="col-md-4">
+<a href="{% url 'week_list' %}" class="text-decoration-none">
+<div class="card text-center card-box">
+<div class="card-body">
+<i class="fa-solid fa-calendar-week"></i>
+<h5>This Week</h5>
+<p>Tasks for this week</p>
+</div>
+</div>
+</a>
+</div>
+
+<div class="col-md-4">
+<a href="{% url 'month_list' %}" class="text-decoration-none">
+<div class="card text-center card-box">
+<div class="card-body">
+<i class="fa-solid fa-calendar-alt"></i>
+<h5>This Month</h5>
+<p>Tasks for this month</p>
+</div>
+</div>
+</a>
+</div>
+
+<div class="col-md-4">
+<a href="{% url 'year_list' %}" class="text-decoration-none">
+<div class="card text-center card-box">
+<div class="card-body">
+<i class="fa-solid fa-bullseye"></i>
+<h5>This Year</h5>
+<p>Tasks for this year</p>
+</div>
+</div>
+</a>
+</div>
+
+<div class="col-md-4">
+<a href="{% url 'no_deadline_list' %}" class="text-decoration-none">
+<div class="card text-center card-box">
+<div class="card-body">
+<i class="fa-solid fa-inbox"></i>
+<h5>No Due Date</h5>
+<p>Tasks without deadline</p>
+</div>
+</div>
+</a>
+</div>
+
+<div class="col-md-4">
+<a href="{% url 'all_tasks' %}" class="text-decoration-none">
+<div class="card text-center card-box">
+<div class="card-body">
+<i class="fa-solid fa-tasks"></i>
+<h5>All Tasks</h5>
+<p>Show all the tasks you have added</p>
+</div>
+</div>
+</a>
+</div>
+
+</div>
+</div>
+
+</body>
+</html>
