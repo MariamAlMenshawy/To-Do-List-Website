@@ -6,12 +6,59 @@
     <li class="breadcrumb-item active"><h1>All Tasks</h1></li>
 {% endblock %}
          {% block addTask %}
-                <a href="{% url 'add_task' %}?next={{ request.path }}" class="btn btn-add btn-sm">
-                    <i class="fa-solid fa-plus"></i> Add Task
-                </a>
+    
+    <div class="filter-buttons mb-3">
+        <a href="?status=all" class="btn btn-filter active">All</a>
+        <a href="?status=done" class="btn btn-filter completed">Completed</a>
+        <a href="?status=pending" class="btn btn-filter pending">Not Completed</a>
+    </div>
+        <a href="{% url 'add_task' %}?next={{ request.path }}" class="btn btn-add btn-sm">
+            <i class="fa-solid fa-plus"></i> Add Task
+        </a>    
+                
                 {% endblock addTask %}
 {% block content %}
+<style>
+.btn-filter {
+    padding: 4px 12px; 
+    font-size: 13px;    
+    border-radius: 4px; 
+    font-weight: 500;
+    margin-right: 8px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    display: inline-block; 
+}
 
+.btn-filter.active {
+    background-color: #366190;
+    color: white;
+}
+.btn-filter.active:hover{
+    background-color: #85abd4;
+    color: white;
+}
+
+.btn-filter.completed {
+    background-color: #0d6420; 
+    color: white;
+}
+.btn-filter.completed:hover{
+    background-color: #189734;
+    color: white;
+}
+
+.btn-filter.pending {
+    background-color: #6f662c;
+    color: white;
+}
+.btn-filter.pending:hover{
+    background-color: #bbab42;
+    color: white;
+}
+
+
+</style>
 <table class="table">
         <thead class="thead-dark">
             <tr>

@@ -14,19 +14,35 @@ def home(request):
     return render(request,'home.html')
 
 def listTodayTasks(request):
+    status = request.GET.get('status')
     today = datetime.date.today()
     tasks = Task.objects.filter(user=request.user,due_date = today)
+    
+    if status == 'done':
+        tasks = tasks.filter(is_done=True)
+    elif status == 'pending':
+        tasks = tasks.filter(is_done=False)
+
     return render(request,'today_list.html',{'tasks':tasks})
 
 def listWeekTasks(request):
+    status = request.GET.get('status')
     today = datetime.date.today() 
     days_to_saturday = (today.weekday() + 2) % 7
     start_of_week = today - datetime.timedelta(days = days_to_saturday)
     end_of_week = start_of_week + datetime.timedelta(days=6)
+
     tasks = Task.objects.filter(user=request.user,due_date__range=[start_of_week, end_of_week])
+    
+    if status == 'done':
+        tasks = tasks.filter(is_done=True)
+    elif status == 'pending':
+        tasks = tasks.filter(is_done=False)
+
     return render(request,'week_list.html',{'tasks':tasks})
 
 def listMonthTasks(request):
+    status = request.GET.get('status')
     today = datetime.date.today()
     start_of_month = today.replace(day=1)
     
@@ -37,22 +53,51 @@ def listMonthTasks(request):
     
     end_of_month = next_month - datetime.timedelta(days=1) # اخر يوم في الشهر بيساوي اليوم اللي قبل اول يوم في الشهر الجاي
     tasks = Task.objects.filter(user=request.user,due_date__range=[start_of_month, end_of_month])
+
+    if status == 'done':
+        tasks = tasks.filter(is_done=True)
+    elif status == 'pending':
+        tasks = tasks.filter(is_done=False)
+
     return render(request,'month_list.html',{'tasks':tasks})
 
 def listYearTasks(request):
+    status = request.GET.get('status')
     today = datetime.date.today()
     start_of_year = today.replace(month=1, day=1) # اول يوم في السنة
     end_of_year = today.replace(month=12, day=31) # اخر يوم في السنة
+    
     tasks = Task.objects.filter(user=request.user,due_date__range=[start_of_year, end_of_year])
+
+    if status == 'done':
+        tasks = tasks.filter(is_done=True)
+    elif status == 'pending':
+        tasks = tasks.filter(is_done=False)
+    
     return render(request,'year_list.html',{'tasks':tasks})
 
 def listNoDeadlineTasks(request):
+    status = request.GET.get('status')
     tasks = Task.objects.filter(user=request.user,due_date=None)
+
+    if status == 'done':
+        tasks = tasks.filter(is_done=True)
+    elif status == 'pending':
+        tasks = tasks.filter(is_done=False)
+
     return render(request,'no_deadline_list.html',{'tasks':tasks})
 
 def allTasks(request):
+    status = request.GET.get('status')
     tasks = Task.objects.filter(user=request.user)
-    return render(request,'all_tasks.html',{'tasks':tasks})
+
+    if status == 'done':
+        tasks = tasks.filter(is_done=True)
+    elif status == 'pending':
+        tasks = tasks.filter(is_done=False)
+        
+    return render(request, 'all_tasks.html', {'tasks': tasks})
+
 
 def task_done(request, task_id):
     next_url = request.GET.get('next', '/')
