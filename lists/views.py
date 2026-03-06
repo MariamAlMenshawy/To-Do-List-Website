@@ -13,11 +13,12 @@ from django.utils.decorators import method_decorator
 def home(request):
     return render(request,'home.html')
 
+@login_required
 def listTodayTasks(request):
     status = request.GET.get('status')
     today = datetime.date.today()
     tasks = Task.objects.filter(user=request.user,due_date = today)
-    
+
     if status == 'done':
         tasks = tasks.filter(is_done=True)
     elif status == 'pending':
@@ -25,6 +26,7 @@ def listTodayTasks(request):
 
     return render(request,'today_list.html',{'tasks':tasks})
 
+@login_required
 def listWeekTasks(request):
     status = request.GET.get('status')
     today = datetime.date.today() 
@@ -41,6 +43,7 @@ def listWeekTasks(request):
 
     return render(request,'week_list.html',{'tasks':tasks})
 
+@login_required
 def listMonthTasks(request):
     status = request.GET.get('status')
     today = datetime.date.today()
@@ -61,6 +64,7 @@ def listMonthTasks(request):
 
     return render(request,'month_list.html',{'tasks':tasks})
 
+@login_required
 def listYearTasks(request):
     status = request.GET.get('status')
     today = datetime.date.today()
@@ -76,6 +80,7 @@ def listYearTasks(request):
     
     return render(request,'year_list.html',{'tasks':tasks})
 
+@login_required
 def listNoDeadlineTasks(request):
     status = request.GET.get('status')
     tasks = Task.objects.filter(user=request.user,due_date=None)
@@ -87,6 +92,7 @@ def listNoDeadlineTasks(request):
 
     return render(request,'no_deadline_list.html',{'tasks':tasks})
 
+@login_required
 def allTasks(request):
     status = request.GET.get('status')
     tasks = Task.objects.filter(user=request.user)
