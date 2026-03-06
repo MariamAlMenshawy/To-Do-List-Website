@@ -1,7 +1,7 @@
 # To Do List Website  
 
-This To-Do List Website is a web-based application built using the Django framework (Python), HTML, CSS, and Bootstrap.
-Users can efficiently manage their daily tasks and set deadlines. 
+A web-based To-Do List application built using the Django framework (Python), HTML, CSS, and Bootstrap. This app helps users efficiently manage daily tasks, set deadlines, and track progress.
+
 ---
 
 ## Features
@@ -29,18 +29,18 @@ Quickly view "All", "Completed", or "Not Completed" tasks to stay focused.
 ---
 
 ## Technologies Used 
-*Backend:* Python & Django Framework.
-*Frontend:* HTML5, CSS3, and Bootstrap for responsive design.
-*Database:* PostgreSQL.
+* Backend: Python & Django Framework.
+* Frontend: HTML5, CSS3, and Bootstrap for responsive design.
+* Database: PostgreSQL.
 
 ---
 
 ## How to Run
-- Clone the repository to your local machine.
-- Ensure Python and Django are installed.
-- Run py manage.py migrate to set up the database.
-- Start the server using py manage.py runserver.
-- Open http://127.0.0.1:8000/ in your browser.
+1. Clone the repository to your local machine.
+2. Ensure Python and Django are installed.
+3. Run `py manage.py migrate` to set up the database.
+4. Start the server using `py manage.py runserver` .
+5. Open http://127.0.0.1:8000/ in your browser.
 
 ---
 
