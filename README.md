@@ -7,18 +7,18 @@ A web-based To-Do List application built using the Django framework (Python), HT
 ## Features
 
 ### Authentication System
-- Secure Login/Logout: Users must have an account to manage their personal tasks.
-- User-Specific Data: Each user only sees and manages their own tasks.
+- **Secure Login/Logout:** Users must have an account to manage their personal tasks.
+- **User-Specific Data:** Each user only sees and manages their own tasks.
 
 
 
 
 ### Task Management
 
-* #### Full Control (CRUD): Create, view, update, and delete tasks easily.
-* #### Quick Toggle: Mark tasks as "Done" or "Pending" with a single click.
-* #### Track Deadlines: Set due dates for every task to stay on schedule.
-* #### Filter by Status: Quickly view "All", "Completed", or "Not Completed" tasks to stay focused.
+* **Full Control (CRUD):** Create, view, update, and delete tasks easily.
+* **Quick Toggle:** Mark tasks as "Done" or "Pending" with a single click.
+* **Track Deadlines:** Set due dates for every task to stay on schedule.
+* **Filter by Status:** Quickly view "All", "Completed", or "Not Completed" tasks to stay focused.
 
 
 
