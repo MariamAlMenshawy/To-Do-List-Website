@@ -12,19 +12,13 @@ A web-based To-Do List application built using the Django framework (Python), HT
 
 
 
+
 ### Task Management
 
-* #### Full Control (CRUD)
-Create, view, update, and delete tasks easily.
-
-* #### Quick Toggle
-Mark tasks as "Done" or "Pending" with a single click.
-
-* #### Track Deadlines
-Set due dates for every task to stay on schedule.
-
-* #### Filter by Status
-Quickly view "All", "Completed", or "Not Completed" tasks to stay focused.
+* #### Full Control (CRUD): Create, view, update, and delete tasks easily.
+* #### Quick Toggle: Mark tasks as "Done" or "Pending" with a single click.
+* #### Track Deadlines: Set due dates for every task to stay on schedule.
+* #### Filter by Status: Quickly view "All", "Completed", or "Not Completed" tasks to stay focused.
 
 
 
