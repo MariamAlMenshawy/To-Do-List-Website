@@ -30,8 +30,27 @@
     background-color: #556f8b;
     color: white;
 }
-</style>
+.btn-delete{
+    background-color: #7b1010; 
+    color: white;
+    font-weight: bold;
+    transition: background 0.3s;
+}
 
+.btn-delete:hover{
+    background-color: #b82121; 
+    color: white;
+
+}
+</style>
+<div class="mb-3 d-flex justify-content-end">
+    <form method="post" action="{% url 'delete_task' task.id %}?next={{ request.GET.next }}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-delete">
+            <i class="fa fa-trash"></i> Delete
+        </button>
+    </form>
+</div>
 <form method="post">
     {% csrf_token %}
     
@@ -43,6 +62,11 @@
     <div class="mb-3">
         {{ form.body.label }}
         {{ form.body }}
+    </div>
+
+    <div class="form-check mb-3">
+        {{ form.is_done }}
+        {{ form.is_done.label }}
     </div>
 
     <div class="mb-3">
@@ -59,7 +83,7 @@
         </div>
     </div>
 
-    <button class="btn btn-add">Add</button>
+    <button class="btn btn-add">Update</button>
 
 </form>
 

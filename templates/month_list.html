@@ -26,7 +26,7 @@
         <tbody>
             {% for task in tasks%}
             <tr>
-                <td> <a href="#">{{task.title}}</a> </td>
+                <td> <a href="{% url 'update_task' task.id %}?next={{ request.path }}">{{task.title}}</a> </td>
                 <td>{{task.body}}</td>
                 <td>
                   <form method="post" action="{% url 'task_done' task.id %}?next={{ request.path }}">

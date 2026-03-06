@@ -1,9 +1,13 @@
 import datetime
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render,get_object_or_404
 from .models import Task
 from django.contrib.auth.models import User
-from .forms import NewTaskForm
+from .forms import NewTaskForm, UpdateTaskForm
+from django.views.generic import DeleteView, UpdateView
+from django.utils.decorators import method_decorator
+
 # Create your views here.
 
 def home(request):
@@ -11,7 +15,7 @@ def home(request):
 
 def listTodayTasks(request):
     today = datetime.date.today()
-    tasks = Task.objects.filter(due_date = today)
+    tasks = Task.objects.filter(user=request.user,due_date = today)
     return render(request,'today_list.html',{'tasks':tasks})
 
 def listWeekTasks(request):
@@ -19,7 +23,7 @@ def listWeekTasks(request):
     days_to_saturday = (today.weekday() + 2) % 7
     start_of_week = today - datetime.timedelta(days = days_to_saturday)
     end_of_week = start_of_week + datetime.timedelta(days=6)
-    tasks = Task.objects.filter(due_date__range=[start_of_week, end_of_week])
+    tasks = Task.objects.filter(user=request.user,due_date__range=[start_of_week, end_of_week])
     return render(request,'week_list.html',{'tasks':tasks})
 
 def listMonthTasks(request):
@@ -32,22 +36,22 @@ def listMonthTasks(request):
         next_month = today.replace(month=today.month+1, day=1) # الشهور هتمشي عادي 
     
     end_of_month = next_month - datetime.timedelta(days=1) # اخر يوم في الشهر بيساوي اليوم اللي قبل اول يوم في الشهر الجاي
-    tasks = Task.objects.filter(due_date__range=[start_of_month, end_of_month])
+    tasks = Task.objects.filter(user=request.user,due_date__range=[start_of_month, end_of_month])
     return render(request,'month_list.html',{'tasks':tasks})
 
 def listYearTasks(request):
     today = datetime.date.today()
     start_of_year = today.replace(month=1, day=1) # اول يوم في السنة
     end_of_year = today.replace(month=12, day=31) # اخر يوم في السنة
-    tasks = Task.objects.filter(due_date__range=[start_of_year, end_of_year])
+    tasks = Task.objects.filter(user=request.user,due_date__range=[start_of_year, end_of_year])
     return render(request,'year_list.html',{'tasks':tasks})
 
 def listNoDeadlineTasks(request):
-    tasks = Task.objects.filter(due_date=None)
+    tasks = Task.objects.filter(user=request.user,due_date=None)
     return render(request,'no_deadline_list.html',{'tasks':tasks})
 
 def allTasks(request):
-    tasks = Task.objects.all()
+    tasks = Task.objects.filter(user=request.user)
     return render(request,'all_tasks.html',{'tasks':tasks})
 
 def task_done(request, task_id):
@@ -75,3 +79,33 @@ def addTask(request):
 
     return render(request,'add_task.html',{'form':form, 'next': next_url})
 
+@method_decorator(login_required,name='dispatch')  #لازم يسجل دخول الاول عشان يعرف يعمل ريبلاي
+class UpdateTask(UpdateView):
+    model = Task
+    form_class = UpdateTaskForm
+    template_name = 'update_task.html'
+    pk_url_kwarg = 'task_id'
+    context_object_name = 'task'
+    
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user)
+    
+    def form_valid(self, form):
+        task = form.save(commit=False)
+        task.updated_at = timezone.now()
+        task.save()
+
+        next_url = self.request.GET.get('next', '/')
+        return redirect(next_url)
+
+@method_decorator(login_required,name='dispatch')  #لازم يسجل دخول الاول عشان يعرف يعمل ريبلاي
+class DeleteTask(DeleteView):
+    model = Task 
+    pk_url_kwarg = 'task_id'
+
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user)
+
+    def get_success_url(self):
+        next_url = self.request.GET.get('next', '/')
+        return next_url
